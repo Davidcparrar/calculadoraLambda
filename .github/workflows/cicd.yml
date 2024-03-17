@@ -1,13 +1,19 @@
 name: "This is a test continuous integration & deployment for a calculator"
 
 on:
-  pull_request:
-    types:
-      - opened
+  push:
+    branches:
+      - main
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Hello world"
 
+      - name: "Hola Raymundo"
+        run: |
+          echo "Hello world"
+          echo "hello world" > hello_world.txt
+
+      - name: "Files"
+        run: ls
