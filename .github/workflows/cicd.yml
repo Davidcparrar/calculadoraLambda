@@ -2,11 +2,12 @@ name: "This is a test continuous integration & deployment for a calculator"
 
 on:
   pull_request
+    types:
+      - opened
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - run: echo "Hello world"
-
 
