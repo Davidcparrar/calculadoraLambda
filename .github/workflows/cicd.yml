@@ -1,0 +1,11 @@
+name: "This is a test continuous integration & deployment for a calculator"
+
+on:
+  push
+
+jobs:
+  test:
+    steps:
+      - run: echo "Hello world"
+
+
