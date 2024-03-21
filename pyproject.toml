@@ -30,10 +30,6 @@ testpaths = [
 ]
 pythonpath = "src"
 
-[tool.setuptools-git-versioning]
-enabled = true
-
-
 [tool.ruff]
 line-length = 79
 extend-exclude = ["tests"]
@@ -50,21 +46,3 @@ skip-magic-trailing-comma = false
 force-wrap-aliases = true
 combine-as-imports = true
 
-[tool.coverage.run]
-omit = [
-    "tests/*"
-]
-
-[tool.semantic_release]
-commit_message = "build(release):{version} [skip ci]"
-
-[tool.semantic_release.branches.main]
-match = "(main|master)"
-prerelease = false
-
-[tool.semantic_release.branches.dev]
-match = "(dev|develop|development)"
-prerelease = true
-
-[tool.semantic_release.changelog]
-exclude_commit_patterns = ["Merge"]

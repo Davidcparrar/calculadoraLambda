@@ -16,17 +16,11 @@ jobs:
           python -m pip install pytest
           python -m pip install ruff
       - name: "Linting"
-        run: |
-          ruff check src/
-          ruff check calculator.py
+        run: make lint 
       - name: "Formating"
-        run: |
-          ruff format --check src/
-          ruff format --check calculator.py
+        run:  make format
       - name: "Sorting"
-        run: |
-          ruff --select I src/
-          ruff --select I calculator.py
+        run: make sort 
       - name: "Testing"
         run: make test
 

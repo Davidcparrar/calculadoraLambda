@@ -1,11 +1,3 @@
-import os
-import sys
-from functools import lru_cache
-
-import numpy as np
-import pandas as pd
-
-
 def lambda_handler(event, context):
     
     number_1 = event.get('number_1', "5")
