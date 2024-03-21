@@ -11,10 +11,23 @@ jobs:
     steps:
       - name: "Checkout files"
         uses: actions/checkout@v4
-      - name: "Hola Raymundo"
+      - name: "Install packages"
         run: |
-          echo "Hello world"
-          echo "hello world" > hello_world.txt
+        python -m pip install pytest
+        python -m pip install ruff
+      - name: "Linting"
+        run: |
+        ruff check src/
+        ruff check calculator.py
+      - name: "Formating"
+        run: |
+        ruff format --check src/
+        ruff format --check calculator.py
+      - name: "Sorting"
+        run: |
+        ruff --select I src/
+        ruff --select I calculator.py
+      - name: "Testing"
+        run: make test
 
-      - name: "Files"
-        run: ls
+
