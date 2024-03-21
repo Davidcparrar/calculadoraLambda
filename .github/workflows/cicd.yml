@@ -54,6 +54,6 @@ jobs:
           docker build -t $REGISTRY/$REPOSITORY:latest .
           docker push $REGISTRY/$REPOSITORY:latest
           aws lambda update-function-code --function-name "lambdaCalculator" \
-                                            --image-uri :latest
+                                            --image-uri $REGISTRY/$REPOSITORY:latest
         
 
