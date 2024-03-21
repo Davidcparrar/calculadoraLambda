@@ -29,19 +29,25 @@ jobs:
     needs: test
     env: 
       NAME_DOCKER_IMAGE: "calculadoralambda"
+      ECR_REPO: ""
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: us-east-1
+      AWS_DEFAULT_OUTPUT: json
     steps:
       - name: Checkout Files
         uses: actions/checkout@v4
       - name: "Build Lambda"
         run: docker build -t $NAME_DOCKER_IMAGE .
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4 
-        with:
-          aws-region: us-east-1
-          aws-access-key-id: $AWS_ACCESS_KEY_ID
-          aws-secret-access-key: $AWS_SECRET_ACCESS_KEY
-      # - name: "Login ECR"
-      #   run : aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+
+      - name: "Login ECR"
+        id: login-ecr
+        uses : aws-actions/amazon-ecr-login@v2
+      - name: "Push to ECR"
+         env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: calculadoralambda
+          IMAGE_TAG: ${{ github.sha }}
+        run : ${{ toJSON(steps) }}
+
 
