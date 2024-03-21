@@ -24,4 +24,8 @@ jobs:
       - name: "Testing"
         run: make test
 
-
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Hola"
+        run: echo "Hello"
