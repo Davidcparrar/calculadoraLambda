@@ -51,7 +51,6 @@ jobs:
           REPOSITORY: calculadoralambda
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          echo ${{ toJSON(steps) }}
-          echo ${{ toJSON(inputs) }}
-      - name: Build Lambda
-        run: docker build -t $NAME_DOCKER_IMAGE .
+          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+          echo ${{ toJSON(github) }}
