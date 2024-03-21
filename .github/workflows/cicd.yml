@@ -4,32 +4,31 @@ on:
   push:
     branches:
       - main
-
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: "Checkout files"
+      - name: Checkout files
         uses: actions/checkout@v4
-      - name: "Install packages"
+      - name: Install packages
         run: |
           python -m pip install pytest
           python -m pip install ruff
-      - name: "Linting"
+      - name: Linting
         run: make lint 
-      - name: "Formating"
+      - name: Formating
         run:  make format
-      - name: "Sorting"
+      - name: Sorting
         run: make sort 
-      - name: "Testing"
+      - name: Testing
         run: make test
 
   deploy:
     runs-on: ubuntu-latest
     needs: test
     env: 
-      NAME_DOCKER_IMAGE: "calculadoralambda"
-      ECR_REPO: "calculadoralambda"
+      NAME_DOCKER_IMAGE: calculadoralambda"
+      ECR_REPO: calculadoralambda
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_DEFAULT_REGION: us-east-1
@@ -37,18 +36,20 @@ jobs:
     steps:
       - name: Checkout Files
         uses: actions/checkout@v4
-      - name: "Build Lambda"
-        run: docker build -t $NAME_DOCKER_IMAGE .
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-1
       - name: Login ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
-        with:
-          aws-region: us-east-1
       - name: Push to ECR
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: calculadoralambda
           IMAGE_TAG: ${{ github.sha }}
-        run: echo ${{ toJSON(steps) }}
-
-
+        run: |
+          echo ${{ toJSON(steps) }}
+          echo ${{ toJSON(inputs) }}
+      - name: Build Lambda
+        run: docker build -t $NAME_DOCKER_IMAGE .
