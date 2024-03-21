@@ -43,7 +43,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
       - name: Push to ECR
-         env:
+        env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: calculadoralambda
           IMAGE_TAG: ${{ github.sha }}
