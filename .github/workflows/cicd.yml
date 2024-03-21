@@ -51,7 +51,9 @@ jobs:
           REPOSITORY: calculadoralambda
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
-          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
-      - name: echo github
-        run: echo ${{ toJSON(github) }}
+          docker build -t $REGISTRY/$REPOSITORY:latest .
+          docker push $REGISTRY/$REPOSITORY:latest
+          aws lambda update-function-code --function-name "lambdaCalculator" \
+                                            --image-uri :latest
+        
+
