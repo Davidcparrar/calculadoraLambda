@@ -10,5 +10,5 @@ format:
 	ruff format --check calculator.py
 
 sort:
-	ruff sort --check src/
-	ruff sort --check calculator.py
+	ruff check --select I src/
+	ruff check --select I calculator.py
