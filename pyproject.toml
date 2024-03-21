@@ -1,0 +1,70 @@
+[build-system]
+requires = ["setuptools>=42.0", "wheel","setuptools-git-versioning"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "CalculatorVer+"
+description = "Lambda to calculate operations between two numbers"
+version = "0.0.0"
+readme = "README.md"
+requires-python = ">=3.12"
+license = {file = "LICENSE"}
+authors = [
+  {email = "davidc.parrar@gmail.com", name = "David Parra"},
+]
+maintainers = [
+  {email = "davidc.parrar@gmail.com", name = "David Parra"},
+]
+classifiers = [
+    "Operating System :: OS Independent",
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+]
+
+
+[tool.pytest.ini_options]
+testpaths = [
+    "tests",
+]
+pythonpath = "src"
+
+[tool.setuptools-git-versioning]
+enabled = true
+
+
+[tool.ruff]
+line-length = 79
+extend-exclude = ["tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "D4", "PT", "PL"]
+ignore = ["E501", "D401", "D417","PT004", "D407", "PLR2004", "PLR0913"]
+exclude =["__init__.py"]
+
+[tool.ruff.format]
+skip-magic-trailing-comma = false
+
+[tool.ruff.lint.isort]
+force-wrap-aliases = true
+combine-as-imports = true
+
+[tool.coverage.run]
+omit = [
+    "tests/*"
+]
+
+[tool.semantic_release]
+commit_message = "build(release):{version} [skip ci]"
+
+[tool.semantic_release.branches.main]
+match = "(main|master)"
+prerelease = false
+
+[tool.semantic_release.branches.dev]
+match = "(dev|develop|development)"
+prerelease = true
+
+[tool.semantic_release.changelog]
+exclude_commit_patterns = ["Merge"]
