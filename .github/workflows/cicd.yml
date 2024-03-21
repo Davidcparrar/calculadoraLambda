@@ -42,6 +42,8 @@ jobs:
       - name: Login ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
+        with:
+          aws-region: us-east-1
       - name: Push to ECR
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
